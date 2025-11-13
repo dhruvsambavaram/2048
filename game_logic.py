@@ -93,16 +93,26 @@ def check_game_state(board):
         return "LOST"
     return "CONTINUE"
     
-    
+   
 
 if __name__ == "__main__":
     # print(merge_line([0, 2, 2, 2]))
-    board = [[4, 16, 2, 16],
-             [8, 8, 8, 4],
-             [4, 4, 4, 2],
-             [2, 2, 2, 4]]
+    
+    # goal : check continue
+    board1 = [[4, 16, 2, 16],
+              [8, 8, 8, 4],
+              [4, 4, 4, 2],
+              [2, 2, 2, 4]]
+    
+    # goal: check lost, neighbours musn't be same
+    board2 = [[2, 16, 4, 16],
+              [8, 4, 8, 4],
+              [4, 16, 4, 2],
+              [2, 64, 2, 4]]
     #transpose(board)
     #move(board, "up")
-    print(check_game_state(board))
+    print(check_game_state(board1))
+    print(check_game_state(board2))
+
     #print(move(board, "Left"))
     #print(board)

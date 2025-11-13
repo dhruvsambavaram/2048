@@ -54,27 +54,24 @@ def key_pressed(event):
     # update board view
     global GAME_STATE
     if GAME_STATE == "CONTINUE":
-        try:     
-            key = event.keysym
-            if key in commands.keys():
-                
-                # operation
-                commands[key](board, key)
-                
-                # feasability
-                GAME_STATE = g.check_game_state(board)
-                
-                if GAME_STATE == "CONTINUE":
-                    b.spawn_random_tile(board)
-                    print(g.check_game_state(board))
-                
-                elif GAME_STATE == "WON":
-                    game_won_screen()
-                
-                display_board(board)
+        key = event.keysym
+        if key in commands.keys():
+            
+            # operation
+            commands[key](board, key)
+            
+            # feasability
+            GAME_STATE = g.check_game_state(board)
+            
+            if GAME_STATE == "CONTINUE":
+                b.spawn_random_tile(board)
+                print(g.check_game_state(board))
+            
+            elif GAME_STATE == "WON":
+                game_won_screen()
 
-        
-        except ValueError:
+            display_board(board)
+
             if GAME_STATE == "LOST":
                 game_over_screen()
          

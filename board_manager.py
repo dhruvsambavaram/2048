@@ -19,16 +19,15 @@ def spawn_random_tile(board: list[list[int]], rng=random) -> tuple[int,int]:
     """Place a new tile in a random empty cell.
        Returns (row, col) where it was placed.
        Raises ValueError if no empty cells."""
-    if (0 not in board[0] and 0 not in board[1] and 0 not in board[2] and 0 not in board[3]):
-        raise ValueError("no empty cells") 
-    while True:
-        a = rng.randint(0, 15)
-        row = a//4
-        col = a%4
-        if board[row][col] == 0:
-            break
-    board[row][col] = random_tile_value(rng)
-    return (row, col)
+    if 0 in board[0] or 0 in board[1] or 0 in board[2] or 0 in board[3]:  
+        while True:
+            a = rng.randint(0, 15)
+            row = a//4
+            col = a%4
+            if board[row][col] == 0:
+                break
+        board[row][col] = random_tile_value(rng)
+        return (row, col)
        
 def init_board(size: int = 4, rng=random) -> list[list[int]]:
     """Create board, spawn two tiles, return board. Use rng for reproducibility."""
