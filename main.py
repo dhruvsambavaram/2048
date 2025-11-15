@@ -2,7 +2,7 @@
 import tkinter as tk
 import board_manager as b
 import game_logic as g
-
+import file_manager as f
 
 LABELS = []
 GAME_STATE = "CONTINUE"
@@ -30,10 +30,10 @@ CELL_NUMBER_COLORS = {2: "#776e65", 4: "#776e65"}
 CELL_NUMBER_FONT = ("Verdana", 24, "bold")
 
 def game_over_screen():
-        print(GAME_STATE)
-        over = tk.Toplevel(root)
-        over.title("Game Over 😭")
-        tk.Label(over, text="Game Over!", font=("Verdana", 20, "bold")).pack(pady=20)
+    print(GAME_STATE)
+    over = tk.Toplevel(root)
+    over.title("Game Over 😭")
+    tk.Label(over, text="Game Over!", font=("Verdana", 20, "bold")).pack(pady=20)
 
 def game_won_screen():
         over = tk.Toplevel(root)
@@ -46,12 +46,16 @@ def display_board(board):
     for i in range(num_rows):
         for j in range(num_cols):
             LABELS[4*i + j].config(text = str(board[i][j]))
-             
+
+def save_game():
+    f.save_game(board)
+
+def load_game():
+    global board
+    board = f.load_game()
+    display_board(board)
 
 def key_pressed(event):
-    # detect direction
-    # call game_logic move function
-    # update board view
     global GAME_STATE
     if GAME_STATE == "CONTINUE":
         key = event.keysym
@@ -75,7 +79,6 @@ def key_pressed(event):
             if GAME_STATE == "LOST":
                 game_over_screen()
          
-
 if __name__ == "__main__":
     #main()
     root = tk.Tk()
@@ -84,8 +87,14 @@ if __name__ == "__main__":
 
     board = b.init_board()
 
+    save = tk.Button(root, text = "Save", command = save_game)
+    save.grid(row = 1, column = 0)
+
+    load = tk.Button(root, text = "Load", command = load_game)
+    load.grid(row = 1, column = 1)
+
     frame = tk.Frame(root, bg = "#bbada0")
-    frame.pack(padx = 20, pady = 20)
+    frame.grid(row = 0, column = 0, padx = 20, pady = 20)
     for i in range(4):
         for j in range(4):
             labelA = tk.Label(frame, text = str(board[i][j]), borderwidth = 1, width = 10, height = 3, justify= tk.CENTER, bg = CELL_COLORS[0], font= CELL_NUMBER_FONT )
@@ -94,6 +103,5 @@ if __name__ == "__main__":
     for i in range(4):
         frame.grid_rowconfigure(i, weight = 1)
         frame.grid_columnconfigure(i, weight = 1)
-
 
     root.mainloop()
