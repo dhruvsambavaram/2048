@@ -1,4 +1,6 @@
 import random
+SCORE = 0
+
 # board.py (public API)
 def create_board(size: int = 4) -> list[list[int]]:
     """Return an empty board (size x size) filled with zeros."""
@@ -32,6 +34,8 @@ def spawn_random_tile(board: list[list[int]], rng=random) -> tuple[int,int]:
 def init_board(size: int = 4, rng=random) -> list[list[int]]:
     """Create board, spawn two tiles, return board. Use rng for reproducibility."""
     board = create_board()
+    global SCORE
+    SCORE = 0
     spawn_random_tile(board, rng)
     spawn_random_tile(board, rng)
     return board

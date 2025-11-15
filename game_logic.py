@@ -23,6 +23,7 @@ def merge_line(line):
     for i in range(len(line)-1):
         if line[i] == line[i+1] and line[i] != 0:
             line[i] = 2*line[i] 
+            b.SCORE = b.SCORE + line[i]
             line[i+1] = 0
     return compress_line(line)
 

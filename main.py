@@ -46,6 +46,7 @@ def display_board(board):
     for i in range(num_rows):
         for j in range(num_cols):
             LABELS[4*i + j].config(text = str(board[i][j]))
+    score_value_label.config(text = str(b.SCORE))
 
 def new_game():
     global board
@@ -54,10 +55,12 @@ def new_game():
 
 def save_game():
     f.save_game(board)
+    f.save_score()
 
 def load_game():
     global board
     board = f.load_game()
+    b.SCORE = f.load_score()
     display_board(board)
 
 def key_pressed(event):
@@ -95,14 +98,20 @@ if __name__ == "__main__":
     btns_frame = tk.Frame(root, bg = "#bbada0")
     btns_frame.grid(row = 1, column = 0, padx = 20, pady = 20)
 
+    score_tittle_label = tk.Label(btns_frame, text = "Score", borderwidth = 1, width = 10, height = 3, justify= tk.CENTER, bg = CELL_COLORS[0], font= CELL_NUMBER_FONT )
+    score_tittle_label.grid(row = 1, column = 0, padx = 5, pady = 5)
+
+    score_value_label = tk.Label(btns_frame, text = str(b.SCORE), borderwidth = 1, width = 10, height = 3, justify= tk.CENTER, bg = CELL_COLORS[0], font= CELL_NUMBER_FONT )
+    score_value_label.grid(row = 1, column = 1, padx = 5, pady = 5)
+
     new_game_btn = tk.Button(btns_frame, text = "New Game", command = new_game, font = ("Helvetica", 11), padx= 16, pady= 10, foreground= "#e06f4a", background = "#f0f0f0")
-    new_game_btn.grid(row = 1, column = 0, padx = 5, pady = 5)
+    new_game_btn.grid(row = 2, column = 0, padx = 5, pady = 5)
 
     save_btn = tk.Button(btns_frame, text = "Save", command = save_game, font = ("Helvetica", 11), padx= 16, pady= 10, foreground= "#e06f4a", background = "#f0f0f0")
-    save_btn.grid(row = 1, column = 1, padx = 5, pady = 5)
+    save_btn.grid(row = 2, column = 1, padx = 5, pady = 5)
 
     load_btn = tk.Button(btns_frame, text = "Load", command = load_game, font = ("Helvetica", 11), padx= 16, pady= 10, foreground= "#e06f4a", background = "#f0f0f0")
-    load_btn.grid(row = 1, column = 2, padx = 5, pady = 5)
+    load_btn.grid(row = 2, column = 2, padx = 5, pady = 5)
 
 
     board_frame = tk.Frame(root, bg = "#bbada0")
